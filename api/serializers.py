@@ -7,4 +7,4 @@ class ItemSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Item
 		fields = ('id', 'name', 'completed', 'date_created', 'date_modified')
-		read_only_fields('date_created', 'date_modified')
+		read_only_fields = ('date_created', 'date_modified')
