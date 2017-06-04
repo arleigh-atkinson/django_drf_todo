@@ -38,3 +38,19 @@ class ViewTestCase(TestCase):
 			format='json')
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
 		self.assertContains(response, item)
+
+	def test_api_can_update_an_item(self):
+		item = Item.objects.get()
+		change_item = {'name': 'Clean up trash', 'completed': False}
+		response = self.client.put(
+			reverse('details', kwargs={'pk': item.id}), change_item,
+			format='json')
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+	def test_api_can_delete_an_item(self):
+		item = Item.objects.get()
+		response = self.client.delete(
+			reverse('details', kwargs={'pk': item.id}), format='json',
+			follow=True)
+
+		self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
