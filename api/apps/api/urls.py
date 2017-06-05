@@ -4,9 +4,9 @@ from .views import CreateView
 from .views import DetailsView
 
 urlpatterns = {
-	url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
-	url(r'^items/$', CreateView.as_view(), name='create'),
-	url(r'^items/(?P<pk>[0-9]+)/$',
+    url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^items/$', CreateView.as_view(), name='create'),
+    url(r'^items/(?P<pk>[0-9]+)/$',
         DetailsView.as_view(), name="details")
 }
 
