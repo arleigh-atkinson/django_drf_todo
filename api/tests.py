@@ -23,8 +23,9 @@ class ViewTestCase(TestCase):
 	"""Test suite for API views."""
 
 	def setUp(self):
-		self.client = APIClient()
 		user = User.objects.create(username='test')
+		self.client = APIClient()
+		self.client.force_authenticate(user=user)
 		self.item_data = { 'name': 'Take out trash', 'completed': True, 'user':user.id}
 		self.response = self.client.post(
 			reverse('create'),
