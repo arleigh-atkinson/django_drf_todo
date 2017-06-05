@@ -3,13 +3,15 @@ from .models import Item
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 class ModelTestCase(TestCase):
 	"""Test suite for item model."""
 
 	def setUp(self):
+		user = User.objects.create(username='test')
 		self.item_name = 'Clean up kitchen.'
-		self.item = Item(name=self.item_name, completed=False)
+		self.item = Item(name=self.item_name, completed=False, user=user)
 
 	def test_model_can_create_an_item(self):
 		count = Item.objects.count()
@@ -22,7 +24,8 @@ class ViewTestCase(TestCase):
 
 	def setUp(self):
 		self.client = APIClient()
-		self.item_data = { 'name': 'Take out trash', 'completed': True }
+		user = User.objects.create(username='test')
+		self.item_data = { 'name': 'Take out trash', 'completed': True, 'user':user.id}
 		self.response = self.client.post(
 			reverse('create'),
 			self.item_data,
